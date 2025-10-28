@@ -8,7 +8,14 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/out)
 
 cmake_path(GET CMAKE_CURRENT_SOURCE_DIR PARENT_PATH ROOT_DIR)
-set(WIN_DIR ${CMAKE_CURRENT_SOURCE_DIR})
+
+set(ROOT_INCLUDE_DIR   "")
+set(WINVER_INCLUDE_DIR "")
+set(KRB5_INCLUDE_DIR   "")
+set(GSSAPI_INCLUDE_DIR "")
+
+list(APPEND ROOT_INCLUDE_DIR   ${ROOT_DIR}/include)
+list(APPEND WINVER_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 # if(CMAKE_GENERATOR STREQUAL "MinGW Makefiles")
 #     message("Building with MinGW Makefiles generator.")
@@ -17,3 +24,4 @@ set(WIN_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 # endif()
 
 add_subdirectory(lib)
+# add_subdirectory(kfwlogon)
