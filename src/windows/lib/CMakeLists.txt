@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.20)
 project (krb5 LANGUAGES C)
 
 set(TARGET_NAME krb5)
@@ -10,14 +10,8 @@ set(TARGET_LIBRARIES)
 file(GLOB_RECURSE SOURCES "*.c")
 file(GLOB_RECURSE HEADERS "*.h")
 
-if(CMAKE_GENERATOR STREQUAL "MinGW Makefiles")
-    message("Building with MinGW Makefiles generator.")
-else()
-    # message(FATAL_ERROR "Only the MinGW compiler is supported!")
-endif()
-
 list(APPEND TARGET_INCLUDES "${CMAKE_CURRENT_SOURCE_DIR}")
-list(APPEND TARGET_INCLUDES "${ROOT_DIR}/include")
+list(APPEND TARGET_INCLUDES "${WIN_DIR}/include")
 
 list(APPEND TARGET_LIBRARIES "win")
 
