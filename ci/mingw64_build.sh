@@ -4,6 +4,14 @@ SELF_BIN=$(realpath ${0})
 SELF_DIR=$(dirname ${SELF_BIN})
 
 cd ${SELF_DIR}/..
+cd src
+echo Clear the old generated files..
+make -f Makefile.in clean-windows-mac
+echo Generate the new files..
+make -f Makefile.in prep-windows
+rm Makefile
+
+cd ${SELF_DIR}/..
 if [ -d build ]; then
     rm -rf build
 fi
@@ -11,8 +19,8 @@ fi
 mkdir build
 cd build
 
-echo building_started..
+echo Building_started..
 cmake ../src
 cmake --build .
 
-echo building_finished..
+echo Building_finished..

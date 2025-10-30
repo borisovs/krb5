@@ -35,4 +35,5 @@ message("===> UTIL_ET_INCLUDE_DIR => ${UTIL_ET_INCLUDE_DIR}")
 # endif()
 
 add_subdirectory(windows/lib)
+# add_subdirectory(util/et)
 # add_subdirectory(kfwlogon)
