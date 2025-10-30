@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.20)
-project (krb5 LANGUAGES C)
+project (loadfunc LANGUAGES C)
 
 set(TARGET_NAME win)
 set(TARGET_INCLUDES)

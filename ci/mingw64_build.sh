@@ -12,7 +12,7 @@ mkdir build
 cd build
 
 echo building_started..
-cmake ../src/windows
+cmake ../src
 cmake --build .
 
 echo building_finished..
