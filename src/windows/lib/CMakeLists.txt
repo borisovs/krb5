@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.20)
 project (krb5 LANGUAGES C)
 
-set(TARGET_NAME krb5)
+set(TARGET_NAME win)
 set(TARGET_INCLUDES)
 set(TARGET_LIBRARIES)
 
@@ -12,8 +12,6 @@ file(GLOB_RECURSE HEADERS "*.h")
 
 list(APPEND TARGET_INCLUDES "${ROOT_INCLUDE_DIR}")
 list(APPEND TARGET_INCLUDES "${WINVER_INCLUDE_DIR}")
-
-list(APPEND TARGET_LIBRARIES "win")
 
 add_library(${TARGET_NAME} ${HEADERS} ${SOURCES})
 
