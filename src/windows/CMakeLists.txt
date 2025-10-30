@@ -13,9 +13,19 @@ set(ROOT_INCLUDE_DIR   "")
 set(WINVER_INCLUDE_DIR "")
 set(KRB5_INCLUDE_DIR   "")
 set(GSSAPI_INCLUDE_DIR "")
+set(UTIL_INCLUDE_DIR "")
 
+list(APPEND ROOT_INCLUDE_DIR   ${ROOT_DIR})
 list(APPEND ROOT_INCLUDE_DIR   ${ROOT_DIR}/include)
-list(APPEND WINVER_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
+list(APPEND KRB5_INCLUDE_DIR   ${ROOT_DIR}/include/krb5)
+list(APPEND UTIL_INCLUDE_DIR   ${ROOT_DIR}/util/et)
+list(APPEND WINVER_INCLUDE_DIR ${ROOT_DIR}/windows/include)
+
+
+message("===> ROOT_INCLUDE_DIR=${ROOT_INCLUDE_DIR}")
+message("===> WINVER_INCLUDE_DIR=${WINVER_INCLUDE_DIR}")
+message("===> KRB5_INCLUDE_DIR=${KRB5_INCLUDE_DIR}")
+message("===> UTIL_INCLUDE_DIR=${UTIL_INCLUDE_DIR}")
 
 # if(CMAKE_GENERATOR STREQUAL "MinGW Makefiles")
 #     message("Building with MinGW Makefiles generator.")
