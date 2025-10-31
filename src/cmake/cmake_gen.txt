@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.20)
 
-# Replacement of generating *.h/*.c  inside Kerberos Makefile
+# Generate *.h/*.c  MIT Kerberos5 files
 find_program(AWK_BIN NAMES awk gawk)
 if(NOT AWK_BIN)
     message(FATAL_ERROR "awk not found. Please install awk or set the AWK_BIN variable manually.")
@@ -11,43 +11,51 @@ if(NOT CAT_BIN)
     message(FATAL_ERROR "cat not found. Please install cat or set the CAT_BIN variable manually.")
 endif()
 
-#
-# Building error tables requires awk.
-#
-set(AH  "${ROOT_DIR}/util/et/et_h.awk")
-set(AC  "${ROOT_DIR}/util/et/et_c.awk")
-set(INC "${ROOT_DIR}/include")
-set(ET  "${ROOT_DIR}/lib/krb5/error_tables")
-set(GG  "${ROOT_DIR}/lib/gssapi/generic")
-set(GK  "${ROOT_DIR}/lib/gssapi/krb5")
-set(PR  "${ROOT_DIR}/util/profile")
-set(CE  "${ROOT_DIR}/util/et")
-set(CCL "${ROOT_DIR}/ccapi/lib")
+set(AH  ${ROOT_DIR}/util/et/et_h.awk)
+set(AC  ${ROOT_DIR}/util/et/et_c.awk)
+set(INC ${ROOT_DIR}/include)
+set(ET  ${ROOT_DIR}/lib/krb5/error_tables)
+set(GG  ${ROOT_DIR}/lib/gssapi/generic)
+set(GK  ${ROOT_DIR}/lib/gssapi/krb5)
+set(PR  ${ROOT_DIR}/util/profile)
+set(CE  ${ROOT_DIR}/util/et)
+set(CCL ${ROOT_DIR}/ccapi/lib)
 
-# ETOUT =	\
-# 	$(INC)asn1_err.h $(ET)asn1_err.c \
-# 	$(INC)kdb5_err.h $(ET)kdb5_err.c \
-# 	$(INC)krb5_err.h $(ET)krb5_err.c \
-# 	$(INC)k5e1_err.h $(ET)k5e1_err.c \
-# 	$(INC)kv5m_err.h $(ET)kv5m_err.c \
-# 	$(INC)krb524_err.h $(ET)krb524_err.c \
-# 	$(PR)prof_err.h $(PR)prof_err.c \
-# 	$(GG)gssapi_err_generic.h $(GG)gssapi_err_generic.c \
-# 	$(GK)gssapi_err_krb5.h $(GK)gssapi_err_krb5.c \
-# 	$(CCL)ccapi_err.h $(CCL)ccapi_err.c
+set(KRBHDEP ${INC}/krb5/krb5.hin
+            ${INC}/krb5_err.h
+            ${INC}/k5e1_err.h
+            ${INC}/kdb5_err.h
+            ${INC}/kv5m_err.h
+            ${INC}/krb524_err.h
+            ${INC}/asn1_err.h
+)
 
-# HOUT =	$(INC)krb5/krb5.h $(GG)gssapi.h $(PR)profile.h
+set(ETOUT ${INC}/asn1_err.h
+          ${ET}/asn1_err.c
+          ${INC}/kdb5_err.h
+          ${ET}/kdb5_err.c
+          ${INC}/krb5_err.h
+          ${ET}/krb5_err.c
+          ${INC}/k5e1_err.h
+          ${ET}/k5e1_err.c
+          ${INC}/kv5m_err.h
+          ${ET}/kv5m_err.c
+          ${INC}/krb524_err.h
+          ${ET}/krb524_err.c
+          ${PR}/prof_err.h
+          ${PR}/prof_err.c
+          ${GG}/gssapi_err_generic.h
+          ${GG}/gssapi_err_generic.c
+          ${GK}/gssapi_err_krb5.h
+          ${GK}/gssapi_err_krb5.c
+          ${CCL}/ccapi_err.h
+          ${CCL}/ccapi_err.c
+)
 
-# CLEANUP= Makefile $(ETOUT) $(HOUT) \
-# 	include/profile.h include/osconf.h
-
-
-# dos-Makefile:
-# 	cat config/win-pre.in Makefile.in config/win-post.in | \
-# 		sed -e "s/^##DOS##//" -e "s/^##DOS//" > Makefile.tmp
-# 	mv Makefile.tmp Makefile
-
-# prep-windows: dos-Makefile awk-windows-mac
+set(HOUT ${INC}/krb5/krb5.h
+         ${GG}/gssapi.h
+         ${PR}/profile.h
+)
 
 add_custom_command(OUTPUT ${INC}/asn1_err.h
     COMMAND ${AWK_BIN} -f ${AH} outfile=${INC}/asn1_err.h ${ET}/asn1_err.et
@@ -169,24 +177,24 @@ add_custom_command(OUTPUT ${CE}/test2.c
     COMMENT "Generating test2.c"
 )
 
-# KRBHDEP = $(INC)krb5/krb5.hin $(INC)krb5_err.h $(INC)k5e1_err.h \
-# 	$(INC)kdb5_err.h $(INC)kv5m_err.h $(INC)krb524_err.h $(INC)asn1_err.h
-
-# $(INC)krb5/krb5.h: $(KRBHDEP)
-# 	rm -f $@
-# 	cat $(KRBHDEP) > $@
-# $(PR)profile.h: $(PR)profile.hin $(PR)prof_err.h
-# 	rm -f $@
-# 	cat $(PR)profile.hin $(PR)prof_err.h > $@
-# $(GG)gssapi.h: $(GG)gssapi.hin
-# 	rm -f $@
-# 	cat $(GG)gssapi.hin > $@
-
-# awk-windows-mac: $(ETOUT) $(HOUT) $(CE)test2.h
+add_custom_command(OUTPUT ${INC}/krb5/krb5.h
+    COMMAND ${CMAKE_COMMAND} -E rm -f ${INC}/krb5/krb5.h
+    COMMAND ${CAT_BIN} ${KRBHDEP} > ${INC}/krb5/krb5.h
+    COMMENT "Creating ${INC}/krb5/krb5.h"
+)
 
 
+add_custom_command(OUTPUT ${PR}/profile.h
+    COMMAND ${CMAKE_COMMAND} -E rm -f ${PR}/profile.h
+    COMMAND ${CAT_BIN} ${PR}/profile.hin  ${PR}/prof_err.h > ${PR}/profile.h
+    COMMENT "Creating ${PR}/profile.h"
+)
 
-######################################
+add_custom_command(OUTPUT ${GG}/gssapi.h
+    COMMAND ${CMAKE_COMMAND} -E rm -f ${GG}/gssapi.h
+    COMMAND ${CAT_BIN} ${GG}/gssapi.hin > ${PR}/gssapi.h
+    COMMENT "Creating ${GG}/gssapi.h"
+)
 
 if(NOT TARGET gen_headers)
     add_custom_target(gen_headers ALL DEPENDS
@@ -219,5 +227,15 @@ if(NOT TARGET gen_impl)
         ${CCL}/ccapi_err.c
         ${CE}/test1.c
         ${CE}/test2.c
+    )
+endif()
+
+if(NOT TARGET gen_deps)
+    add_custom_target(gen_deps ALL DEPENDS
+        gen_headers
+        gen_impl
+        ${INC}/krb5/krb5.h
+        ${PR}/profile.h
+        ${GG}/gssapi.h
     )
 endif()
