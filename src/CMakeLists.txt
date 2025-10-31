@@ -34,6 +34,8 @@ message("===> UTIL_ET_INCLUDE_DIR => ${UTIL_ET_INCLUDE_DIR}")
 #     # message(FATAL_ERROR "Only the MinGW compiler is supported!")
 # endif()
 
+include(cmake/cmake_gen.txt)
+
 add_subdirectory(windows/lib)
 # add_subdirectory(util/et)
 # add_subdirectory(kfwlogon)
