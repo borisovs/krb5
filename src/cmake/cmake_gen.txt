@@ -196,6 +196,18 @@ add_custom_command(OUTPUT ${GG}/gssapi.h
     COMMENT "Creating ${GG}/gssapi.h"
 )
 
+add_custom_command(OUTPUT ${INC}/autoconf.h
+    COMMAND ${CMAKE_COMMAND} -E rm -f ${INC}/autoconf.h
+    COMMAND ${CMAKE_COMMAND} -E copy ${INC}/win-mac.h ${INC}/autoconf.h
+    COMMENT "Creating ${GG}/autoconf.h"
+)
+
+add_custom_command(OUTPUT ${INC}/osconf.h
+    COMMAND ${CMAKE_COMMAND} -E rm -f ${INC}/osconf.h
+    COMMAND ${CAT_BIN} ${INC}/osconf.hin > ${INC}/osconf.h
+    COMMENT "Creating ${INC}/osconf.h"
+)
+
 if(NOT TARGET gen_headers)
     add_custom_target(gen_headers ALL DEPENDS
         ${INC}/asn1_err.h
@@ -210,6 +222,8 @@ if(NOT TARGET gen_headers)
         ${CCL}/ccapi_err.h
         ${CE}/test1.h
         ${CE}/test2.h
+        ${INC}/autoconf.h
+        ${INC}/osconf.h
     )
 endif()
 
