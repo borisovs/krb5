@@ -199,7 +199,7 @@ add_custom_command(OUTPUT ${GG}/gssapi.h
 add_custom_command(OUTPUT ${INC}/autoconf.h
     COMMAND ${CMAKE_COMMAND} -E rm -f ${INC}/autoconf.h
     COMMAND ${CMAKE_COMMAND} -E copy ${INC}/win-mac.h ${INC}/autoconf.h
-    COMMENT "Creating ${GG}/autoconf.h"
+    COMMENT "Creating ${INC}/autoconf.h"
 )
 
 add_custom_command(OUTPUT ${INC}/osconf.h
@@ -251,5 +251,7 @@ if(NOT TARGET gen_deps)
         ${INC}/krb5/krb5.h
         ${PR}/profile.h
         ${GG}/gssapi.h
+        ${INC}/autoconf.h
+        ${INC}/osconf.h
     )
 endif()

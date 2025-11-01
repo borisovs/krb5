@@ -22,7 +22,7 @@ mkdir build
 cd build
 
 echo Building_started..
-cmake ../src
-cmake --build .
+cmake ../src    #-DCMAKE_BUILD_TYPE=Release
+cmake --build . #--config Release
 
 echo Building_finished..

@@ -74,11 +74,19 @@ krb5int_gettimeofday (struct timeval *tp, void *ignore)
     li.HighPart = ft.dwHighDateTime;
     ull = li.QuadPart;
 
+#if defined(_MSC_VER)
     ull -= 116444736000000000i64;
     ull /= 10i64;               /* ull is now in microseconds */
 
     tp->tv_usec = (long)(ull % 1000000i64);
     tp->tv_sec  = (long)(ull / 1000000i64);
+#else
+    ull -= 116444736000000000LL;
+    ull /= 10LL;               /* ull is now in microseconds */
+
+    tp->tv_usec = (long)(ull % 1000000LL);
+    tp->tv_sec  = (long)(ull / 1000000LL);
+#endif //_MSC_VER
 
     return 0;
 }

@@ -409,7 +409,9 @@ typedef struct { int error; unsigned char did_run; } k5_init_t;
 #endif
 
 #ifdef _WIN32
-# define SSIZE_MAX ((ssize_t)(SIZE_MAX/2))
+    #if defined(_MSC_VER)
+        #define SSIZE_MAX ((ssize_t)(SIZE_MAX/2))
+    #endif //_MSC_VER
 #endif
 
 /* Read and write integer values as (unaligned) octet strings in
@@ -886,6 +888,7 @@ int k5_fnmatch(const char *pattern, const char *string, int flags);
 /* Provide [v]asprintf interfaces.  */
 #ifndef HAVE_VSNPRINTF
 #ifdef _WIN32
+#if defined(_MSC_VER)
 static inline int
 vsnprintf(char *str, size_t size, const char *format, va_list args)
 {
@@ -912,6 +915,7 @@ snprintf(char *str, size_t size, const char *format, ...)
     va_end(args);
     return n;
 }
+#endif //_MSC_VER
 #else /* not win32 */
 #error We need an implementation of vsnprintf.
 #endif /* win32? */
