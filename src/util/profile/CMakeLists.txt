@@ -1,0 +1,30 @@
+cmake_minimum_required(VERSION 3.20)
+project (profile LANGUAGES C)
+
+set(TARGET_NAME profile)
+set(TARGET_INCLUDES)
+set(TARGET_LIBRARIES)
+set(TARGET_COMPILER_DEFS)
+
+file(GLOB_RECURSE HEADERS "*.h")
+file(GLOB_RECURSE SOURCES "*.c")
+
+list(APPEND TARGET_INCLUDES "${ROOT_INCLUDE_DIR}")
+list(APPEND TARGET_INCLUDES "${UTIL_DIR}/profile")
+list(APPEND TARGET_INCLUDES "${UTIL_DIR}/et")
+
+list(APPEND TARGET_LIBRARIES "commerr")
+list(APPEND TARGET_LIBRARIES "krb5sprt")
+list(APPEND TARGET_COMPILER_DEFS LIBDIR="${CMAKE_LIBRARY_OUTPUT_DIRECTORY}")
+
+add_library(${TARGET_NAME} ${HEADERS} ${SOURCES})
+
+set_target_properties(${TARGET_NAME}${BITS} PROPERTIES
+                      C_STANDARD 17
+                      C_STANDARD_REQUIRED ON
+)
+
+# target_compile_options(${TARGET_NAME} PRIVATE ${TARGET_COMPILE_OPTIONS})
+target_compile_definitions(${TARGET_NAME} PUBLIC ${TARGET_COMPILER_DEFS})
+target_include_directories(${TARGET_NAME} PRIVATE ${TARGET_INCLUDES})
+target_link_libraries (${TARGET_NAME} PRIVATE ${TARGET_LIBRARIES})
