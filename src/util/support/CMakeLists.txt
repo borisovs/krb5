@@ -13,10 +13,10 @@ set(SOURCES threads.c
             errors.c
             k5buf.c
             gmt_mktime.c
-            fake-addrinfo.c
+            # fake-addrinfo.c
             utf8.c
-            utf8_conv.c
-            gettimeofday.c
+            # utf8_conv.c
+            # gettimeofday.c
             strlcpy.c
             fnmatch.c
             printf.c
