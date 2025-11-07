@@ -3,7 +3,7 @@ echo:
 echo *****************************************************************
 echo *    Before build install MSYS2 and add it to PATH              *
 echo *    https://github.com/msys2/msys2-installer/releases          *
-echo *    in order to have perl/awk/cat                              *
+echo *    in order to have perl/awk/cat/git                          *
 echo *****************************************************************
 echo:
 
