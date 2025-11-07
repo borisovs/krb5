@@ -6,7 +6,7 @@ echo *    https://strawberryperl.com/          *
 echo *******************************************
 echo:
 
-set OUTPUT=%cd%\output 
+set OUTPUT=%cd%\output\
 
 if exist %OUTPUT% rmdir %OUTPUT% /q /s
 mkdir %OUTPUT%
