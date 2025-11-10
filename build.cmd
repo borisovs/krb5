@@ -1,9 +1,11 @@
 @echo off
 echo:
 echo *****************************************************************
-echo *    Before build install MSYS2 and add it to PATH              *
+echo *    Before the build:                                          *
+echo *                      1. Install MSYS2                         *
+echo *                      2. Check the PATH to MSYS2 in script     *
+echo *                      3. Check awk/cat/git                     *
 echo *    https://github.com/msys2/msys2-installer/releases          *
-echo *    in order to have perl/awk/cat/git                          *
 echo *****************************************************************
 echo:
 
