@@ -18,5 +18,5 @@ set %OPENSSL_DIR%=%cd%\openssl\
 if exist %OPENSSL_DIR% rmdir %OPENSSL_DIR% /q /s
 mkdir %OPENSSL_DIR%
 
-perl Configure VC-WIN64A --prefix=%OPENSSL_DIR%
+perl Configure --prefix=%OPENSSL_DIR% VC-WIN64A no-shared enable-capieng
 nmake
