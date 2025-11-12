@@ -9,16 +9,18 @@ echo *    https://github.com/msys2/msys2-installer/releases          *
 echo *****************************************************************
 echo:
 
-set OUTPUT=%cd%\output\
+set MSYS2_BIN=D:\msys64\usr\bin
+set PATH=%PATH%;"%WindowsSdkVerBinPath%"\x86
+set PATH=%PATH%;%MSYS2_BIN%
 
-if exist %OUTPUT% rmdir %OUTPUT% /q /s
-mkdir %OUTPUT%
-set PATH=%PATH%;"%WindowsSdkVerBinPath%"\x86  
-set KRB_INSTALL_DIR=%OUTPUT%
-@REM et OPENSSL_DIR=C:\OpenSSL-Win64
-@REM set OPENSSL_VERSION=3
+set KRB_INSTALL_DIR=%cd%\build
+if exist %KRB_INSTALL_DIR% rmdir %KRB_INSTALL_DIR% /q /s
+mkdir %KRB_INSTALL_DIR%
 
-echo on
+set OPENSSL_DIR=%cd%\openssl
+set OPENSSL_VERSION=3
+
+@echo on
 cd src
 nmake -f Makefile.in prep-windows
 nmake NODEBUG=1
