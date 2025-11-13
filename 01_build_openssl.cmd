@@ -6,7 +6,7 @@ echo *    https://github.com/openssl/openssl                         *
 echo *****************************************************************
 echo:
 
-set SRC_DIR=%cd%\openssl_src\
+set SRC_DIR=%cd%\openssl-src\
 if exist %SRC_DIR% rmdir %SRC_DIR% /q /s
 git clone --recursive --depth 1 --single-branch --branch openssl-3.6.0 https://github.com/openssl/openssl.git %SRC_DIR%
 
