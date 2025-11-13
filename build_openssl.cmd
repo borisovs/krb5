@@ -12,12 +12,15 @@ git clone --recursive --depth 1 --single-branch --branch openssl-3.6.0 https://g
 
 set PATH=%PATH%;"C:\Program Files\NASM"
 set PATH=%PATH%;"C:\Strawberry\perl\bin"
+@REM cpan install Text::Template
 
 set OPENSSL_DIR=%cd%\openssl\
 if exist %OPENSSL_DIR% rmdir %OPENSSL_DIR% /q /s
 mkdir %OPENSSL_DIR%
 
 cd %SRC_DIR%
-perl Configure --prefix=%OPENSSL_DIR% --openssldir=%OPENSSL_DIR% VC-WIN64A no-shared enable-capieng
-nmake
+@REM perl Configure --prefix=%OPENSSL_DIR% --openssldir=%OPENSSL_DIR% VC-WIN64A no-shared enable-capieng
+perl Configure --prefix=%OPENSSL_DIR% --openssldir=%OPENSSL_DIR% VC-WIN64A enable-capieng
+nmake -f makefile
 nmake install_sw
+cd ..
